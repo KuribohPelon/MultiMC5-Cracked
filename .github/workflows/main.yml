@@ -154,7 +154,6 @@ jobs:
           cd build
           mingw32-make tcversion
           mingw32-make -j%NUMBER_OF_PROCESSORS%
-          echo %NUMBER_OF_PROCESSORS%
 
       - name: Test
         shell: cmd
