@@ -156,7 +156,7 @@ jobs:
 
       - name: Setup CMake
         run: |
-          curl -L https://github.com/Kitware/CMake/releases/download/v3.20.2/cmake-3.20.2-windows-i386.zip -o cmake.zip
+          wget https://github.com/Kitware/CMake/releases/download/v3.20.2/cmake-3.20.2-windows-i386.zip -o cmake.zip
           unzip cmake.zip
 
       - name: Setup JDK
