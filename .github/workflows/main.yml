@@ -24,7 +24,6 @@ jobs:
       - name: Get clang and set as default
         run: | 
          sudo apt install clang libomp5
-         sudo update-alternatives --config c++
          
       - name: Clone
         run: |
@@ -32,6 +31,7 @@ jobs:
           cd ~/MultiMC
           mkdir build
           mkdir MultiMC
+          sudo update-alternatives --config c++
 
       - name: Build
         run: |
