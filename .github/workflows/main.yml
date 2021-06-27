@@ -73,7 +73,7 @@ jobs:
            sudo apt --purge remove gcc g++
            
        - name: Get latest Clang
-         run: sudo apt install clang-12 libomp5
+         run: sudo apt install clang-12 clang clang-11 libomp5
          
        - name: Clone and set Clang as default
          run: |
