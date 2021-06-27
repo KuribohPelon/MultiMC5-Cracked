@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-linux:
+  build-linux-gcc:
     name: build-linux
     runs-on: ubuntu-latest
 
@@ -52,10 +52,10 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2.2.3
         with:
-          name: MultiMC5-Cracked-Linux
+          name: MultiMC5-Cracked-Linux-GCC
           path: /home/runner/MultiMC/MultiMC
 
-  build-windows:
+  build-windows-msvc:
     name: build-windows
     runs-on: windows-latest
 
@@ -190,5 +190,5 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2.2.3
         with:
-          name: MultiMC5-Cracked-Windows
+          name: MultiMC5-Cracked-Windows-MSVC
           path: "D:/MultiMC-Cracked"
