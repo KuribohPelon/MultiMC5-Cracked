@@ -18,8 +18,11 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt update
-          sudo apt install openjdk-8-jdk libgl1-mesa-dev qt5-default clang
-          sudo apt-get --purge remove remove gcc g++
+          sudo apt install openjdk-8-jdk libgl1-mesa-dev qt5-default
+          sudo apt --purge remove gcc g++
+          
+      - name: Get clang
+        run: sudo apt install clang libomp5
 
       - name: Clone
         run: |
