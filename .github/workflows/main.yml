@@ -19,7 +19,7 @@ jobs:
         run: |
           sudo apt update
           sudo apt install openjdk-8-jdk libgl1-mesa-dev qt5-default clang
-          sudo apt remove gcc g++
+          sudo apt-get --purge remove remove gcc g++
 
       - name: Clone
         run: |
