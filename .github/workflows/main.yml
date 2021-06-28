@@ -305,6 +305,10 @@ jobs:
          msystem: MINGW32
          install: clang make
           
+      - name: Install
+        shell: cmd
+        run: C:\msys64\mingw32_shell.bat
+        
       - name: Setup JDK
         uses: actions/setup-java@v2
         with:
