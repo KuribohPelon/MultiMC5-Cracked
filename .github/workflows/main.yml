@@ -352,8 +352,8 @@ jobs:
           set PATH=%CD%\cmake-3.20.5-windows-i386\bin;%PATH%
           set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;%PATH%
           cd build
-          mingw32-make tcversion
-          mingw32-make -j%NUMBER_OF_PROCESSORS%
+          make tcversion
+          make -j%NUMBER_OF_PROCESSORS%
 
       - name: Test
         shell: cmd
@@ -365,7 +365,7 @@ jobs:
           set PATH=%CD%\cmake-3.20.5-windows-i386\bin;%PATH%
           set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;%PATH%
           cd build
-          mingw32-make test
+          make test
           cmake -E remove_directory "D:/MultiMC-Cracked"
 
       - name: Install
@@ -378,7 +378,7 @@ jobs:
           set PATH=%CD%\cmake-3.20.5-windows-i386\bin;%PATH%
           set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;%PATH%
           cd build
-          mingw32-make install
+          make install
 
       - name: Copy OpenSSL
         shell: cmd
