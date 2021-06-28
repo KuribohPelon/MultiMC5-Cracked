@@ -323,6 +323,7 @@ jobs:
       - name: Setup Clang
       - uses: msys2/setup-msys2@v2
         with:
+         msystem: MINGW32
          install: make mingw-w64-i686-clang
          run: clang --version
          
