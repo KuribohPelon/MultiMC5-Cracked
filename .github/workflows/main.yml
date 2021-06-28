@@ -298,10 +298,12 @@ jobs:
         run: |
           curl -L https://github.com/Kitware/CMake/releases/download/v3.20.5/cmake-3.20.5-windows-i386.zip -o cmake.zip
           unzip cmake.zip
-
+      
       - name: Setup Clang
-        run: |
-           pacman --noconfirm -S --needed clang make
+      - uses: msys2/setup-msys2@v2
+        with:
+         msystem: CLANG32
+         install: clang make
           
       - name: Setup JDK
         uses: actions/setup-java@v2
