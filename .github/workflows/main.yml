@@ -300,9 +300,9 @@ jobs:
           unzip cmake.zip
       
       - name: Setup Clang
-      - uses: msys2/setup-msys2@v2
+        uses: msys2/setup-msys2@v2
         with:
-         msystem: CLANG32
+         msystem: MINGW32
          install: clang make
           
       - name: Setup JDK
@@ -328,12 +328,6 @@ jobs:
           curl -L https://github.com/IndySockets/OpenSSL-Binaries/raw/master/Archive/openssl-1.0.2g-i386-win32.zip -o OpenSSL.zip
           unzip OpenSSL.zip
           
-     # - name: Setup Clang
-     # - uses: msys2/setup-msys2@v2
-      #  with:
-       #  msystem: MINGW32
-        # install: make mingw-w64-i686-clang
-         #run: clang --version
          
       - name: Build
         shell: cmd
