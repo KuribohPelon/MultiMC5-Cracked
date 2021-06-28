@@ -191,7 +191,7 @@ jobs:
           set PATH=%CD%\zlib;%CD%\zlib\bin;%CD%\zlib\lib;%CD%\zlib\include;%PATH%
           set PATH=%CD%\OpenSSL;%PATH%
           set PATH=C:\hostedtoolcache\windows\Java_Zulu_jdk\8.0.292-10\x86\bin;%PATH%
-          set PATH=%CD%\cmake-3.20.2-windows-i386\bin;%PATH%
+          set PATH=%CD%\cmake-3.20.5-windows-i386\bin;%PATH%
           set CC=D:\Qt\Tools\mingw492_32\bin\gcc.exe
           set CXX=D:\Qt\Tools\mingw492_32\bin\g++.exe
           mkdir build
@@ -206,7 +206,7 @@ jobs:
           set PATH=%CD%\zlib;%CD%\zlib\bin;%PATH%
           set PATH=%CD%\OpenSSL;%PATH%
           set PATH=C:\hostedtoolcache\windows\Java_Zulu_jdk\8.0.292-10\x86\bin;%PATH%
-          set PATH=%CD%\cmake-3.20.2-windows-i386\bin;%PATH%
+          set PATH=%CD%\cmake-3.20.5-windows-i386\bin;%PATH%
           set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;%PATH%
           cd build
           mingw32-make tcversion
@@ -219,7 +219,7 @@ jobs:
           set PATH=%CD%\zlib;%CD%\zlib\bin;%PATH%
           set PATH=%CD%\OpenSSL;%PATH%
           set PATH=C:\hostedtoolcache\windows\Java_Zulu_jdk\8.0.292-10\x86\bin;%PATH%
-          set PATH=%CD%\cmake-3.20.2-windows-i386\bin;%PATH%
+          set PATH=%CD%\cmake-3.20.5-windows-i386\bin;%PATH%
           set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;%PATH%
           cd build
           mingw32-make test
@@ -232,7 +232,7 @@ jobs:
           set PATH=%CD%\zlib;%CD%\zlib\bin;%PATH%
           set PATH=%CD%\OpenSSL;%PATH%
           set PATH=C:\hostedtoolcache\windows\Java_Zulu_jdk\8.0.292-10\x86\bin;%PATH%
-          set PATH=%CD%\cmake-3.20.2-windows-i386\bin;%PATH%
+          set PATH=%CD%\cmake-3.20.5-windows-i386\bin;%PATH%
           set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;%PATH%
           cd build
           mingw32-make install
@@ -279,13 +279,11 @@ jobs:
           mkdir C:/Users/runneradmin/AppData/Roaming/Qt/
           curl https://rickroll.is-inside.me/nPqUqs16.txt --output C:/Users/runneradmin/AppData/Roaming/Qt/qtaccount.ini
           
-      - name: Get Clang and set it as default one
+      - name: Get Clang
       - uses: msys2/setup-msys2@v2
         with:
          install: make mingw-w64-x86_64-clang
-       - run: make CC=clang
-       - run: make CXX=clang
- 
+         
       - name: Download Qt Installer
         if: steps.installer-cached.outputs.cache-hit != 'true' && steps.qt-cached.outputs.cache-hit != 'true'
         run: curl https://download.qt.io/new_archive/qt/5.6/5.6.3/qt-opensource-windows-x86-mingw492-5.6.3.exe --output installer.exe
@@ -336,7 +334,7 @@ jobs:
           set PATH=%CD%\zlib;%CD%\zlib\bin;%CD%\zlib\lib;%CD%\zlib\include;%PATH%
           set PATH=%CD%\OpenSSL;%PATH%
           set PATH=C:\hostedtoolcache\windows\Java_Zulu_jdk\8.0.292-10\x86\bin;%PATH%
-          set PATH=%CD%\cmake-3.20.2-windows-i386\bin;%PATH%
+          set PATH=%CD%\cmake-3.20.5-windows-i386\bin;%PATH%
           set CC=clang
           set CXX=clang++
           mkdir build
@@ -351,7 +349,7 @@ jobs:
           set PATH=%CD%\zlib;%CD%\zlib\bin;%PATH%
           set PATH=%CD%\OpenSSL;%PATH%
           set PATH=C:\hostedtoolcache\windows\Java_Zulu_jdk\8.0.292-10\x86\bin;%PATH%
-          set PATH=%CD%\cmake-3.20.2-windows-i386\bin;%PATH%
+          set PATH=%CD%\cmake-3.20.5-windows-i386\bin;%PATH%
           set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;%PATH%
           cd build
           mingw32-make tcversion
@@ -364,7 +362,7 @@ jobs:
           set PATH=%CD%\zlib;%CD%\zlib\bin;%PATH%
           set PATH=%CD%\OpenSSL;%PATH%
           set PATH=C:\hostedtoolcache\windows\Java_Zulu_jdk\8.0.292-10\x86\bin;%PATH%
-          set PATH=%CD%\cmake-3.20.2-windows-i386\bin;%PATH%
+          set PATH=%CD%\cmake-3.20.5-windows-i386\bin;%PATH%
           set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;%PATH%
           cd build
           mingw32-make test
@@ -377,7 +375,7 @@ jobs:
           set PATH=%CD%\zlib;%CD%\zlib\bin;%PATH%
           set PATH=%CD%\OpenSSL;%PATH%
           set PATH=C:\hostedtoolcache\windows\Java_Zulu_jdk\8.0.292-10\x86\bin;%PATH%
-          set PATH=%CD%\cmake-3.20.2-windows-i386\bin;%PATH%
+          set PATH=%CD%\cmake-3.20.5-windows-i386\bin;%PATH%
           set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;%PATH%
           cd build
           mingw32-make install
