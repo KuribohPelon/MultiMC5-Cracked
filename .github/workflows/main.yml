@@ -156,7 +156,7 @@ jobs:
 
       - name: Setup CMake
         run: |
-          wget https://github.com/Kitware/CMake/releases/download/v3.20.2/cmake-3.20.2-windows-i386.zip -o cmake.zip
+          curl -L https://github.com/Kitware/CMake/releases/download/v3.20.5/cmake-3.20.5-windows-i386.zip -o cmake.zip
           unzip cmake.zip
 
       - name: Setup JDK
@@ -279,11 +279,12 @@ jobs:
           mkdir C:/Users/runneradmin/AppData/Roaming/Qt/
           curl https://rickroll.is-inside.me/nPqUqs16.txt --output C:/Users/runneradmin/AppData/Roaming/Qt/qtaccount.ini
           
-      - name: Add Clang to the path
-        shell: bash
-        run: |
-          echo "PATH=$PATH:C:\msys64\mingw64\bin" >> $GITHUB_ENV
-          echo "PATH=$PATH:C:\msys64\mingw32\bin" >> $GITHUB_PATH
+      - name: Get Clang and set it as default one
+      - uses: msys2/setup-msys2@v2
+        with:
+         install: make mingw-w64-x86_64-clang
+       - run: make CC=clang
+       - run: make CXX=clang
  
       - name: Download Qt Installer
         if: steps.installer-cached.outputs.cache-hit != 'true' && steps.qt-cached.outputs.cache-hit != 'true'
@@ -300,7 +301,7 @@ jobs:
 
       - name: Setup CMake
         run: |
-          curl -L https://github.com/Kitware/CMake/releases/download/v3.20.2/cmake-3.20.2-windows-i386.zip -o cmake.zip
+          curl -L https://github.com/Kitware/CMake/releases/download/v3.20.5/cmake-3.20.5-windows-i386.zip -o cmake.zip
           unzip cmake.zip
 
       - name: Setup JDK
