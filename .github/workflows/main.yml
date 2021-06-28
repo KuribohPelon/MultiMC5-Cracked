@@ -253,7 +253,7 @@ jobs:
           
   build-windows-clang:
     name: build-windows-clang
-    runs-on: windows-latest
+    runs-on: windows-2019-clang-cl
 
     steps:
       - uses: actions/checkout@v2.3.4
