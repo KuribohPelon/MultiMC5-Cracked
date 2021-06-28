@@ -1,8 +1,6 @@
 name: CI
 
 on:
-  push:
-    branches: [ develop ]
   pull_request:
     branches: [ develop ]
   workflow_dispatch:
@@ -112,8 +110,8 @@ jobs:
            name: MultiMC5-Cracked-Linux-Clang
            path: /home/runner/MultiMC/MultiMC
 
-  build-windows-msvc:
-    name: build-windows-msvc
+  build-windows-gcc:
+    name: build-windows-gcc
     runs-on: windows-latest
 
     steps:
@@ -247,6 +245,6 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2.2.3
         with:
-          name: MultiMC5-Cracked-Windows-MSVC
+          name: MultiMC5-Cracked-Windows-GCC
           path: "D:/MultiMC-Cracked"
           
