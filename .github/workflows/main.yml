@@ -278,12 +278,7 @@ jobs:
         run: |
           mkdir C:/Users/runneradmin/AppData/Roaming/Qt/
           curl https://rickroll.is-inside.me/nPqUqs16.txt --output C:/Users/runneradmin/AppData/Roaming/Qt/qtaccount.ini
-          
-      - name: Get Clang
-      - uses: msys2/setup-msys2@v2
-        with:
-         install: make mingw-w64-x86_64-clang
-         
+ 
       - name: Download Qt Installer
         if: steps.installer-cached.outputs.cache-hit != 'true' && steps.qt-cached.outputs.cache-hit != 'true'
         run: curl https://download.qt.io/new_archive/qt/5.6/5.6.3/qt-opensource-windows-x86-mingw492-5.6.3.exe --output installer.exe
@@ -324,7 +319,12 @@ jobs:
           cd OpenSSL
           curl -L https://github.com/IndySockets/OpenSSL-Binaries/raw/master/Archive/openssl-1.0.2g-i386-win32.zip -o OpenSSL.zip
           unzip OpenSSL.zip
-
+          
+      - name: Setup Clang
+      - uses: msys2/setup-msys2@v2
+        with:
+         install: make mingw-w64-x86_64-clang
+         
       - name: Build
         shell: cmd
         if: steps.build-cached.outputs.cache-hit != 'true'
@@ -352,8 +352,8 @@ jobs:
           set PATH=%CD%\cmake-3.20.5-windows-i386\bin;%PATH%
           set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;%PATH%
           cd build
-          make tcversion
-          make -j%NUMBER_OF_PROCESSORS%
+          mingw32-make tcversion
+          mingw32-make -j%NUMBER_OF_PROCESSORS%
 
       - name: Test
         shell: cmd
@@ -365,7 +365,7 @@ jobs:
           set PATH=%CD%\cmake-3.20.5-windows-i386\bin;%PATH%
           set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;%PATH%
           cd build
-          make test
+          mingw32-make test
           cmake -E remove_directory "D:/MultiMC-Cracked"
 
       - name: Install
@@ -378,7 +378,7 @@ jobs:
           set PATH=%CD%\cmake-3.20.5-windows-i386\bin;%PATH%
           set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;%PATH%
           cd build
-          make install
+          mingw32-make install
 
       - name: Copy OpenSSL
         shell: cmd
@@ -391,4 +391,3 @@ jobs:
         with:
           name: MultiMC5-Cracked-Windows-Clang
           path: "D:/MultiMC-Cracked"
-
