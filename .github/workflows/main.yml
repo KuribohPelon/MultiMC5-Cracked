@@ -253,7 +253,7 @@ jobs:
           
   build-windows-clang:
     name: build-windows-clang
-    runs-on: windows-2019-clang-cl
+    runs-on: windows-2019
 
     steps:
       - uses: actions/checkout@v2.3.4
@@ -299,6 +299,10 @@ jobs:
           curl -L https://github.com/Kitware/CMake/releases/download/v3.20.5/cmake-3.20.5-windows-i386.zip -o cmake.zip
           unzip cmake.zip
 
+      - name: Setup Clang
+        run: |
+           pacman --noconfirm -S --needed clang make
+          
       - name: Setup JDK
         uses: actions/setup-java@v2
         with:
