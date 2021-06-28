@@ -321,9 +321,10 @@ jobs:
           unzip OpenSSL.zip
           
       - name: Setup Clang
+        shell: bash
       - uses: msys2/setup-msys2@v2
         with:
-         install: make mingw-w64-x86_64-clang
+         install: make mingw-w64-i686-clang
          
       - name: Build
         shell: cmd
