@@ -8,7 +8,7 @@ on:
 jobs:
   build-linux-gcc:
     name: build-linux-gcc
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
 
     steps:
       - uses: actions/checkout@v2.3.4
@@ -58,7 +58,7 @@ jobs:
                     
   build-linux-clang:
      name: build-linux-clang
-     runs-on: ubuntu-latest
+     runs-on: ubuntu-18.04
 
      steps:
        - uses: actions/checkout@v2.3.4
