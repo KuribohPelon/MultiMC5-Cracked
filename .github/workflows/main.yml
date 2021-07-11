@@ -1,13 +1,15 @@
 name: CI
 
 on:
+  push:
+    branches: [ develop ]
   pull_request:
     branches: [ develop ]
   workflow_dispatch:
 
 jobs:
-  build-linux-gcc:
-    name: build-linux-gcc
+  build-linux:
+    name: build-linux
     runs-on: ubuntu-18.04
 
     steps:
@@ -20,42 +22,35 @@ jobs:
           sudo apt update
           sudo apt install openjdk-8-jdk libgl1-mesa-dev qt5-default
 
-      - name: Clone
-        run: |
-          mkdir ~/MultiMC
-          cd ~/MultiMC
-          mkdir build
-          mkdir MultiMC
-
       - name: Build
         run: |
-          cd ~/MultiMC/build
-          cmake -DCMAKE_INSTALL_PREFIX=../MultiMC -DCMAKE_BUILD_TYPE=Release -DMultiMC_NOTIFICATION_URL:STRING=https://files.multimc.org/notifications.json -DMultiMC_CHANLIST_URL=https://files.multimc.org/update/lin64/channels.json -DMultiMC_PASTE_EE_API_KEY:STRING=utLvciUouSURFzfjPxLBf5W4ISsUX4pwBDF7N1AfZ -DMultiMC_ANALYTICS_ID:STRING=UA-87731965-2 -DMultiMC_LAYOUT=lin-nodeps -DMultiMC_VERSION_BUILD=$(curl https://teamcity.multimc.org/guestAuth/app/rest/buildTypes/MultiMC_Launcher_Linux64_Build/builds/status:success/number) -DMultiMC_BUILD_PLATFORM=lin64 $GITHUB_WORKSPACE
+          mkdir build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=Release -DMultiMC_NOTIFICATION_URL:STRING=https://files.multimc.org/notifications.json -DCMAKE_INSTALL_PREFIX:PATH=/home/runner/MultiMC-Cracked/MultiMC -DMultiMC_CHANLIST_URL=https://files.multimc.org/update/lin64/channels.json -DMultiMC_PASTE_EE_API_KEY:STRING=utLvciUouSURFzfjPxLBf5W4ISsUX4pwBDF7N1AfZ -DMultiMC_ANALYTICS_ID:STRING=UA-87731965-2 -DMultiMC_LAYOUT=lin-nodeps -DMultiMC_VERSION_BUILD=$(curl https://teamcity.multimc.org/guestAuth/app/rest/buildTypes/MultiMC_Launcher_Linux64_Build/builds/status:success/number) -DMultiMC_BUILD_PLATFORM=lin64 $GITHUB_WORKSPACE
 
       - name: Compile
         run: |
-          cd ~/MultiMC/build
+          cd build
           make tcversion
           make -j$(nproc)
 
       - name: Test
         run: |
-          cd ~/MultiMC/build
+          cd build
           make test
-          cmake -E remove_directory "/home/runner/MultiMC/MultiMC"
+          cmake -E remove_directory "/home/runner/MultiMC-Cracked/MultiMC"
 
       - name: Install
         run: |
-          cd ~/MultiMC/build
+          cd build
           make install
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2.2.3
         with:
-          name: MultiMC5-Cracked-Linux-GCC
-          path: /home/runner/MultiMC/MultiMC
-          
-                    
+          name: mmc-cracked-lin64-gcc
+          path: /home/runner/MultiMC-Cracked
+
   build-linux-clang:
      name: build-linux-clang
      runs-on: ubuntu-18.04
@@ -70,10 +65,10 @@ jobs:
            sudo apt update
            sudo apt install openjdk-8-jdk libgl1-mesa-dev qt5-default
            sudo apt --purge remove gcc g++
-           
+
        - name: Get latest Clang
          run: sudo apt install clang-12 clang clang-11 libomp5
-         
+
        - name: Clone and set Clang as default
          run: |
            mkdir ~/MultiMC
@@ -81,37 +76,32 @@ jobs:
            mkdir build
            mkdir MultiMC
            sudo update-alternatives --config c++
-
        - name: Build
          run: |
            cd ~/MultiMC/build
            cmake -DCMAKE_INSTALL_PREFIX=../MultiMC -DCMAKE_BUILD_TYPE=Release -DMultiMC_NOTIFICATION_URL:STRING=https://files.multimc.org/notifications.json -DMultiMC_CHANLIST_URL=https://files.multimc.org/update/lin64/channels.json -DMultiMC_PASTE_EE_API_KEY:STRING=utLvciUouSURFzfjPxLBf5W4ISsUX4pwBDF7N1AfZ -DMultiMC_ANALYTICS_ID:STRING=UA-87731965-2 -DMultiMC_LAYOUT=lin-nodeps -DMultiMC_VERSION_BUILD=$(curl https://teamcity.multimc.org/guestAuth/app/rest/buildTypes/MultiMC_Launcher_Linux64_Build/builds/status:success/number) -DMultiMC_BUILD_PLATFORM=lin64 $GITHUB_WORKSPACE
-
        - name: Compile
          run: |
            cd ~/MultiMC/build
            make tcversion
            make -j$(nproc)
-
        - name: Test
          run: |
            cd ~/MultiMC/build
            make test
            cmake -E remove_directory "/home/runner/MultiMC/MultiMC"
-
        - name: Install
          run: |
            cd ~/MultiMC/build
            make install
-
        - name: Upload Artifacts
          uses: actions/upload-artifact@v2.2.3
          with:
-           name: MultiMC5-Cracked-Linux-Clang
+           name: mmc-cracked-lin64-clang
            path: /home/runner/MultiMC/MultiMC
 
-  build-windows-gcc:
-    name: build-windows-gcc
+  build-windows:
+    name: build-windows
     runs-on: windows-latest
 
     steps:
@@ -155,7 +145,7 @@ jobs:
 
       - name: Setup CMake
         run: |
-          curl -L https://github.com/Kitware/CMake/releases/download/v3.20.5/cmake-3.20.5-windows-i386.zip -o cmake.zip
+          curl -L https://github.com/Kitware/CMake/releases/download/v3.20.2/cmake-3.20.2-windows-i386.zip -o cmake.zip
           unzip cmake.zip
 
       - name: Setup JDK
@@ -190,13 +180,12 @@ jobs:
           set PATH=%CD%\zlib;%CD%\zlib\bin;%CD%\zlib\lib;%CD%\zlib\include;%PATH%
           set PATH=%CD%\OpenSSL;%PATH%
           set PATH=C:\hostedtoolcache\windows\Java_Zulu_jdk\8.0.292-10\x86\bin;%PATH%
-          set PATH=%CD%\cmake-3.20.5-windows-i386\bin;%PATH%
+          set PATH=%CD%\cmake-3.20.2-windows-i386\bin;%PATH%
           set CC=D:\Qt\Tools\mingw492_32\bin\gcc.exe
           set CXX=D:\Qt\Tools\mingw492_32\bin\g++.exe
           mkdir build
           cd build
-          copy D:\Qt\Tools\mingw492_32\bin\mingw32-make.exe D:\Qt\Tools\mingw492_32\bin\make.exe
-          cmake -DCMAKE_BUILD_TYPE=Release -DMultiMC_NOTIFICATION_URL:STRING=https://files.multimc.org/notifications.json -DCMAKE_INSTALL_PREFIX:PATH="D:/MultiMC-Cracked" -DMultiMC_CHANLIST_URL=https://files.multimc.org/update/win32/channels.json -DMultiMC_PASTE_EE_API_KEY:STRING=utLvciUouSURFzfjPxLBf5W4ISsUX4pwBDF7N1AfZ -DMultiMC_ANALYTICS_ID:STRING=UA-87731965-2 -DMultiMC_LAYOUT=win-bundle -DMultiMC_VERSION_BUILD=%BUILD_NUM% -DMultiMC_VERSION_CHANNEL=refs/heads/develop -DMultiMC_BUILD_PLATFORM=win32 -G "MinGW Makefiles" ..
+          cmake -DCMAKE_BUILD_TYPE=Release -DMultiMC_NOTIFICATION_URL:STRING=https://files.multimc.org/notifications.json -DCMAKE_INSTALL_PREFIX:PATH="D:/MultiMC-Cracked/MultiMC" -DMultiMC_CHANLIST_URL=https://files.multimc.org/update/win32/channels.json -DMultiMC_PASTE_EE_API_KEY:STRING=utLvciUouSURFzfjPxLBf5W4ISsUX4pwBDF7N1AfZ -DMultiMC_ANALYTICS_ID:STRING=UA-87731965-2 -DMultiMC_LAYOUT=win-bundle -DMultiMC_VERSION_BUILD=%BUILD_NUM% -DMultiMC_VERSION_CHANNEL=refs/heads/develop -DMultiMC_BUILD_PLATFORM=win32 -G "MinGW Makefiles" ..
 
       - name: Compile
         shell: cmd
@@ -205,7 +194,7 @@ jobs:
           set PATH=%CD%\zlib;%CD%\zlib\bin;%PATH%
           set PATH=%CD%\OpenSSL;%PATH%
           set PATH=C:\hostedtoolcache\windows\Java_Zulu_jdk\8.0.292-10\x86\bin;%PATH%
-          set PATH=%CD%\cmake-3.20.5-windows-i386\bin;%PATH%
+          set PATH=%CD%\cmake-3.20.2-windows-i386\bin;%PATH%
           set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;%PATH%
           cd build
           mingw32-make tcversion
@@ -218,11 +207,11 @@ jobs:
           set PATH=%CD%\zlib;%CD%\zlib\bin;%PATH%
           set PATH=%CD%\OpenSSL;%PATH%
           set PATH=C:\hostedtoolcache\windows\Java_Zulu_jdk\8.0.292-10\x86\bin;%PATH%
-          set PATH=%CD%\cmake-3.20.5-windows-i386\bin;%PATH%
+          set PATH=%CD%\cmake-3.20.2-windows-i386\bin;%PATH%
           set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;%PATH%
           cd build
           mingw32-make test
-          cmake -E remove_directory "D:/MultiMC-Cracked"
+          cmake -E remove_directory "D:/MultiMC-Cracked/MultiMC"
 
       - name: Install
         shell: cmd
@@ -231,7 +220,7 @@ jobs:
           set PATH=%CD%\zlib;%CD%\zlib\bin;%PATH%
           set PATH=%CD%\OpenSSL;%PATH%
           set PATH=C:\hostedtoolcache\windows\Java_Zulu_jdk\8.0.292-10\x86\bin;%PATH%
-          set PATH=%CD%\cmake-3.20.5-windows-i386\bin;%PATH%
+          set PATH=%CD%\cmake-3.20.2-windows-i386\bin;%PATH%
           set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;%PATH%
           cd build
           mingw32-make install
@@ -239,12 +228,11 @@ jobs:
       - name: Copy OpenSSL
         shell: cmd
         run: |
-          cp OpenSSL/ssleay32.dll D:/MultiMC-Cracked/ssleay32.dll
-          cp OpenSSL/libeay32.dll D:/MultiMC-Cracked/libeay32.dll
+          cp OpenSSL/ssleay32.dll D:/MultiMC-Cracked/MultiMC/ssleay32.dll
+          cp OpenSSL/libeay32.dll D:/MultiMC-Cracked/MultiMC/libeay32.dll
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2.2.3
         with:
-          name: MultiMC5-Cracked-Windows-GCC
+          name: mmc-cracked-win32-gcc
           path: "D:/MultiMC-Cracked"
-          
