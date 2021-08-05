@@ -75,6 +75,9 @@ set(MultiMC_META_URL "https://meta.multimc.org/v1/" CACHE STRING "URL to fetch M
 # paste.ee API key
 set(MultiMC_PASTE_EE_API_KEY "utLvciUouSURFzfjPxLBf5W4ISsUX4pwBDF7N1AfZ" CACHE STRING "API key you can get from paste.ee when you register an account")
 
+# Imgur API Client ID
+set(MultiMC_IMGUR_CLIENT_ID "5b97b0713fba4a3" CACHE STRING "Client ID you can get from Imgur when you register an application")
+
 # Google analytics ID
 set(MultiMC_ANALYTICS_ID "UA-87731965-2" CACHE STRING "ID you can get from Google analytics")
 
@@ -172,7 +175,7 @@ if(MultiMC_LAYOUT_REAL STREQUAL "mac-bundle")
     set(INSTALL_BUNDLE "full")
 
     # Add the icon
-    install(FILES application/resources/MultiMC.icns DESTINATION ${RESOURCES_DEST_DIR})
+    install(FILES launcher/resources/MultiMC.icns DESTINATION ${RESOURCES_DEST_DIR})
 
 elseif(MultiMC_LAYOUT_REAL STREQUAL "lin-bundle")
     set(BINARY_DEST_DIR "bin")
@@ -195,7 +198,7 @@ elseif(MultiMC_LAYOUT_REAL STREQUAL "lin-bundle")
     SET(MultiMC_BINARY_RPATH "$ORIGIN/")
 
     # Install basic runner script
-    install(PROGRAMS application/package/linux/MultiMC DESTINATION ${BUNDLE_DEST_DIR})
+    install(PROGRAMS launcher/package/linux/MultiMC DESTINATION ${BUNDLE_DEST_DIR})
 
 elseif(MultiMC_LAYOUT_REAL STREQUAL "lin-nodeps")
     set(BINARY_DEST_DIR "bin")
@@ -212,7 +215,7 @@ elseif(MultiMC_LAYOUT_REAL STREQUAL "lin-nodeps")
     SET(MultiMC_BINARY_RPATH "$ORIGIN/")
 
     # Install basic runner script
-    install(PROGRAMS application/package/linux/MultiMC DESTINATION ${BUNDLE_DEST_DIR})
+    install(PROGRAMS launcher/package/linux/MultiMC DESTINATION ${BUNDLE_DEST_DIR})
 
 elseif(MultiMC_LAYOUT_REAL STREQUAL "lin-system")
     set(MultiMC_APP_BINARY_NAME "multimc" CACHE STRING "Name of the MultiMC binary")
@@ -275,12 +278,11 @@ add_subdirectory(libraries/LocalPeer) # fork of a library from Qt solutions
 add_subdirectory(libraries/classparser) # google analytics library
 add_subdirectory(libraries/optional-bare)
 add_subdirectory(libraries/tomlc99) # toml parser
+add_subdirectory(libraries/katabasis) # An OAuth2 library that tried to do too much
 
 ############################### Built Artifacts ###############################
 
 add_subdirectory(buildconfig)
-add_subdirectory(api/logic)
-add_subdirectory(api/gui)
 
 # NOTE: this must always be last to appease the CMake deity of quirky install command evaluation order.
-add_subdirectory(application)
+add_subdirectory(launcher)
